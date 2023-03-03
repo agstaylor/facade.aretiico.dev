@@ -1,0 +1,2 @@
+class EjbcaClientException(Exception):
+        pass

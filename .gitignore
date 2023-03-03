@@ -1,0 +1,12 @@
+# Ignore everything in the root directory
+*
+
+# directories to whitelist
+!/ejbca_client/
+
+# and files
+!ejbca_client/*.py
+!/*.py
+!/*.md
+!/*.toml
+!/.gitignore
