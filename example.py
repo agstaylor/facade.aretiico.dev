@@ -1,5 +1,9 @@
 """
- Some examples to drive the client API
+Example to drive the client API
+
+usage:
+python example.py --url eng04.aretiico.dev --client portal@aretiico.dev.pem --server server.pem
+python example.py --url ca.aretiico.dev --client portal@aretiico.dev.pem --server server.pem
 """
 from ejbca_client.EjbcaClient import EjbcaClient
 import argparse

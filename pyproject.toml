@@ -17,6 +17,9 @@ flask-expects-json = "^1.7.0"
 cryptography = "^39.0.1"
 
 
+[tool.poetry.group.dev.dependencies]
+autopep8 = "^2.0.2"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,353 @@
+{
+	"info": {
+		"_postman_id": "b4285e17-4532-42a8-b331-831dcd314fb4",
+		"name": "facade (eng04.aretiico.dev)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16812452"
+	},
+	"item": [
+		{
+			"name": "certificate",
+			"item": [
+				{
+					"name": "pkcs12 - enroll",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\":\"password\", \"dn\":\"E=ataylor@aretiico.dev,CN=Alastair Taylor,OU=Engineering,O=Aretiico,C=GB\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://eng04.aretiico.dev:5000/certificate/pkcs12enroll/smime/aretiico_user",
+							"protocol": "http",
+							"host": [
+								"eng04",
+								"aretiico",
+								"dev"
+							],
+							"port": "5000",
+							"path": [
+								"certificate",
+								"pkcs12enroll",
+								"smime",
+								"aretiico_user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "pkcs10 - enroll",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"request\":\"MIICmjCCAYICAQAwVTELMAkGA1UEBhMCVUsxETAPBgNVBAoMCEFyZXRpaWNvMRQwEgYDVQQLDAtFbmdpbmVlcmluZzEdMBsGA1UEAwwUYXRheWxvckBhcmV0aWljby5kZXYwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDcnRgeBQRJSnByJQRIFgS018nujx1vCI540JkYITulWJvuXxV8Fp/ePYqnC9a9DMGOAOykRrUJFXQdbyHxiScNQSXOW8eL23lI1zjEAd52o9J95PHHrVfBQ4ZRDJJK0lhjG0i/xPodJDg21g2uvfGB4S9wrCdTMkZm3o2KjiM3ASg2kZ58keSRUi0hdrown79+29CHhe49CrFxoDpBhHBSHxCPSUlrS6f3Jwg+Pzl0Iul1jwnJCp0tiaMHuop1u8kJgBJVUZaT14pUKacFECiso+DZmXFUS3GyW+NNSouQLIcvEHBc8VNMS5UGNVwG/peGUOUrPX0q+XtLQHVCkPadAgMBAAGgADANBgkqhkiG9w0BAQsFAAOCAQEAnHrq74124XAIaot9yTj6BKsH/z7/4ZwKICNv7zPEU6wtoIFg7Q9ej/SfKFZFZK+c+GJVfW1KVDtzXmH3bX9prtvC3a7SrIb/auDXNUgMBQXd9IMU5MY8WlBJUBx66idPZwKmFu6G6zTf3RpAZSuXqeqI66JM6crTCjI+OxCRXx64WOAWPLrK2GuPC/AMuCi6UGYvh5EizOyD+w/ZIQM+KWA5rqp2dj0f5VnD/fordFIo1cm5A+8Zrf9YRBpY3ogwCIe6draUrlTJPjaFzRXVsrHvIEKfZhGDTu+oMJdYPaEtP5b0Za+n3O3tbrKS6U9cG7h3p68Gn1D4QdEjfTQNNw==0\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://eng04.aretiico.dev:5000/certificate/pkcs10enroll/smime/aretiico_user",
+							"protocol": "http",
+							"host": [
+								"eng04",
+								"aretiico",
+								"dev"
+							],
+							"port": "5000",
+							"path": [
+								"certificate",
+								"pkcs10enroll",
+								"smime",
+								"aretiico_user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "endentity",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"aretiico_user\", \"email\":\"aretiico_user@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://eng04.aretiico.dev:5000/endentity",
+							"protocol": "http",
+							"host": [
+								"eng04",
+								"aretiico",
+								"dev"
+							],
+							"port": "5000",
+							"path": [
+								"endentity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"new_email@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://eng04.aretiico.dev:5000/endentity/aretiico_user",
+							"protocol": "http",
+							"host": [
+								"eng04",
+								"aretiico",
+								"dev"
+							],
+							"port": "5000",
+							"path": [
+								"endentity",
+								"aretiico_user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://eng04.aretiico.dev:5000/endentity/aretiico_user",
+							"protocol": "http",
+							"host": [
+								"eng04",
+								"aretiico",
+								"dev"
+							],
+							"port": "5000",
+							"path": [
+								"endentity",
+								"aretiico_user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://eng04.aretiico.dev:5000/endentity/aretiico_user",
+							"protocol": "http",
+							"host": [
+								"eng04",
+								"aretiico",
+								"dev"
+							],
+							"port": "5000",
+							"path": [
+								"endentity",
+								"aretiico_user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "certificates",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://eng04.aretiico.dev:5000/endentity/certificates/aretiico_user",
+							"protocol": "http",
+							"host": [
+								"eng04",
+								"aretiico",
+								"dev"
+							],
+							"port": "5000",
+							"path": [
+								"endentity",
+								"certificates",
+								"aretiico_user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "utility",
+			"item": [
+				{
+					"name": "ca version",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://eng04.aretiico.dev:5000/ca/version",
+							"protocol": "http",
+							"host": [
+								"eng04",
+								"aretiico",
+								"dev"
+							],
+							"port": "5000",
+							"path": [
+								"ca",
+								"version"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ca",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://eng04.aretiico.dev:5000/ca",
+							"protocol": "http",
+							"host": [
+								"eng04",
+								"aretiico",
+								"dev"
+							],
+							"port": "5000",
+							"path": [
+								"ca"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ca chain",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://eng04.aretiico.dev:5000/ca/chain",
+							"protocol": "http",
+							"host": [
+								"eng04",
+								"aretiico",
+								"dev"
+							],
+							"port": "5000",
+							"path": [
+								"ca",
+								"chain"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

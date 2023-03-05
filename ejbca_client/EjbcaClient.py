@@ -1,16 +1,4 @@
-"""A one-line summary of the module or program, terminated by a period.
-
-Leave one blank line.  The rest of this docstring should contain an
-overall description of the module or program.  Optionally, it may also
-contain a brief description of exported classes and functions and/or usage
-examples.
-
-Typical usage example:
-
-  foo = ClassFoo()
-  bar = foo.FunctionBar()
-"""
-
+"""Client to wrap EJBCA SOAP API"""
 import base64
 from enum import Enum
 import requests
@@ -22,10 +10,10 @@ from ejbca_client.EjbcaClientException import EjbcaClientException
 # https://download.primekey.se/docs/EJBCA-Enterprise/latest/ws/org/ejbca/core/protocol/ws/client/gen/UserMatch.html
 EJBCA_CONSTANTS_USER_MATCH = dict(
     {
-        'MATCH_TYPE_BEGINSWITH': 1,
-        'MATCH_TYPE_CONTAINS': 2,
-        'MATCH_TYPE_EQUALS': 0,
-        'MATCH_WITH_USERNAME': 0,
+        "MATCH_TYPE_BEGINSWITH": 1,
+        "MATCH_TYPE_CONTAINS": 2,
+        "MATCH_TYPE_EQUALS": 0,
+        "MATCH_WITH_USERNAME": 0,
     }
 )
 
@@ -33,32 +21,32 @@ EJBCA_CONSTANTS_USER_MATCH = dict(
 # https://download.primekey.se/docs/EJBCA-Enterprise/latest/ws/org/ejbca/core/protocol/ws/client/gen/RevokeStatus.html
 EJBCA_CONSTANTS_REVOCATION_REASON = dict(
     {
-        'NOT_REVOKED': -1,
-        'AACOMPROMISE': 10,
-        'AFFILIATIONCHANGED': 3,
-        'CACOMPROMISE': 2,
-        'CERTIFICATEHOLD': 6,
-        'CESSATIONOFOPERATION': 5,
-        'KEYCOMPROMISE': 1,
-        'PRIVILEGESWITHDRAWN': 9,
-        'REMOVEFROMCRL': 8,
-        'SUPERSEDED': 4,
-        'UNSPECIFIED': 0,
+        "NOT_REVOKED": -1,
+        "AACOMPROMISE": 10,
+        "AFFILIATIONCHANGED": 3,
+        "CACOMPROMISE": 2,
+        "CERTIFICATEHOLD": 6,
+        "CESSATIONOFOPERATION": 5,
+        "KEYCOMPROMISE": 1,
+        "PRIVILEGESWITHDRAWN": 9,
+        "REMOVEFROMCRL": 8,
+        "SUPERSEDED": 4,
+        "UNSPECIFIED": 0,
     }
 )
 
 # ejbca endentity status constants
 EJBCA_CONSTANTS_ENDENTITY_STATUS = dict(
     {
-        10: 'NEW',  # New user
-        11: 'FAILED',  # Generation of user certificate failed
-        20: 'INITIALIZED',  # User has been initialized
-        30: 'INPROCESS',  # Generation of user certificate in process
-        40: 'GENERATED',  # A certificate has been generated for the user
-        50: 'REVOKED',  # The user has been revoked and should not have any more certificates issued
-        60: 'HISTORICAL',  # The user is old and archived
-        70: 'KEYRECOVERY',  # The user is should use key recovery functions in next certificate generation.
-        80: 'WAITINGFORADDAPPROVAL',  # the operation is waiting to be approved before execution.
+        10: "NEW",  # New user
+        11: "FAILED",  # Generation of user certificate failed
+        20: "INITIALIZED",  # User has been initialized
+        30: "INPROCESS",  # Generation of user certificate in process
+        40: "GENERATED",  # A certificate has been generated for the user
+        50: "REVOKED",  # The user has been revoked and should not have any more certificates issued
+        60: "HISTORICAL",  # The user is old and archived
+        70: "KEYRECOVERY",  # The user is should use key recovery functions in next certificate generation.
+        80: "WAITINGFORADDAPPROVAL",  # the operation is waiting to be approved before execution.
     }
 )
 
@@ -66,12 +54,13 @@ EJBCA_CONSTANTS_ENDENTITY_STATUS = dict(
 # https://download.primekey.se/docs/EJBCA-Enterprise/latest/ws/org/ejbca/core/protocol/ws/client/gen/RevokeStatus.html
 EJBCA_CONSTANTS_REQUEST_TYPE = dict(
     {
-        'CRMF': 1,
-        'PKCS10': 0,
-        'PUBLICKEY': 3,
-        'SPKAC': 2,
+        "CRMF": 1,
+        "PKCS10": 0,
+        "PUBLICKEY": 3,
+        "SPKAC": 2,
     }
 )
+
 
 class UserDataVOWS:
     STATUS_FAILED = 11
@@ -82,10 +71,11 @@ class UserDataVOWS:
     STATUS_KEYRECOVERY = 70
     STATUS_NEW = 10
     STATUS_REVOKED = 50
-    TOKEN_TYPE_JKS = 'JKS'
-    TOKEN_TYPE_P12 = 'P12'
-    TOKEN_TYPE_PEM = 'PEM'
-    TOKEN_TYPE_USERGENERATED = 'USERGENERATED'
+    TOKEN_TYPE_JKS = "JKS"
+    TOKEN_TYPE_P12 = "P12"
+    TOKEN_TYPE_PEM = "PEM"
+    TOKEN_TYPE_USERGENERATED = "USERGENERATED"
+
 
 class UserMatch(Enum):
     MATCH_TYPE_BEGINSWITH = 1
@@ -146,6 +136,7 @@ class AlgorithmConstants:
     SIGALG_SHA512_WITH_RSA = "SHA512WithRSA"
     SIGALG_SHA512_WITH_RSA_AND_MGF1 = "SHA512withRSAandMGF1"
 
+
 class CertificateHelper:
     CERT_REQ_TYPE_CRMF = 1
     CERT_REQ_TYPE_PKCS10 = 0
@@ -153,7 +144,7 @@ class CertificateHelper:
     CERT_REQ_TYPE_SPKAC = 2
     RESPONSETYPE_CERTIFICATE = "CERTIFICATE"
     RESPONSETYPE_PKCS7 = "PKCS7"
-    RESPONSETYPE_PKCS7WITHCHAIN = "PKCS7WITHCHAIN"    
+    RESPONSETYPE_PKCS7WITHCHAIN = "PKCS7WITHCHAIN"
 
 
 class TokenType(Enum):
@@ -163,13 +154,13 @@ class TokenType(Enum):
 
 class EjbcaClient:
 
-    """ High level inteface to the EJBCA SOAP Web Service
+    """High level inteface to the EJBCA SOAP Web Service
 
-        WSDL, connect to a running instance, i.e:
-        python -mzeep http://ca.aretiico.dev:8080/ejbca/ejbcaws/ejbcaws?wsdl
+    WSDL, connect to a running instance, i.e:
+    python -mzeep http://ca.aretiico.dev:8080/ejbca/ejbcaws/ejbcaws?wsdl
     """
 
-    # Use properties here, we cant hen adapt to dynamic loading from the various returned
+    # Use properties here, we can then adapt to dynamic loading from the various returned
     # lists from ejbca depending on the configuration of the specific rbac tls token
 
     @property
@@ -196,26 +187,30 @@ class EjbcaClient:
     def certificateProfile(self, v):
         self.__certificateProfile = v
 
-    # Defaults from the initial UK setup, profile names will change over time
-    # ideally, the tls token will have RBAC configured in such a manner that
-    # only one CA and limited profiles will ever be returned
-
-    _default_ca = 'Aretiico UK Commercial Issuing'
-    _default_endEntityProfile = 'EMPTY'
-    _default_certificateProfile = 'ENDUSER'
-
     def __init__(
-        self, url: str, client_key: str, client_certificate: str, server_certificate: str,
-        ca=_default_ca,
-        endEntityProfile=_default_endEntityProfile,
-        certificateProfile=_default_certificateProfile
+        self,
+        url: str,
+        client_key: str,
+        client_certificate: str,
+        server_certificates: str,
+        ca: str = "Aretiico UK Commercial Issuing",
+        endEntityProfile: str = "EMPTY",
+        certificateProfile: str = "ENDUSER",
     ):
-        """
+        """Connect to a CA instance and authenticate via mutual TLS
+
+        Defaults are from the initial UK setup, profile names will change over time
+        TLS token will have RBAC configured in such a manner that only one CA and
+        limited profiles will ever be returned
+
         Args:
-            url - base ejbca server url, without path or http/https
-            client_key - pem client key for authentication to server
-            client_certificate - pem clientcertificate for authentication to server
-            server_certificate - server root certificate for tls connection
+            url (str): ca instance
+            client_key (str): private key for mtls authentication
+            client_certificate (str): corresponding client certificate
+            server_certificates (str): certificate bundle required to build full server trust chain
+            ca (str, optional): _description_. Defaults to 'Aretiico UK Commercial Issuing'.
+            endEntityProfile (str, optional): _description_. Defaults to 'EMPTY'.
+            certificateProfile (str, optional): _description_. Defaults to 'ENDUSER'.
         """
 
         self.ca = ca
@@ -224,13 +219,12 @@ class EjbcaClient:
 
         # -- setup underlying https
         _https_session = requests.Session()
-        _https_session.verify = server_certificate
+        _https_session.verify = server_certificates
         _https_session.cert = (client_certificate, client_key)
         _transport = zeep.transports.Transport(session=_https_session)
 
         self._client = zeep.Client(
-            'https://' + url + ':8443/ejbca/ejbcaws/ejbcaws?wsdl',
-            transport=_transport,
+            "https://" + url + ":8443/ejbca/ejbcaws/ejbcaws?wsdl", transport=_transport
         )
 
     def getEjbcaVersion(self) -> str:
@@ -242,24 +236,26 @@ class EjbcaClient:
 
     def addUser(self, username: str, email: str):
         """
-        Add the initial end entity record,
-        Most values here are overridden when issuing
+        Add the initial end entity record.
+        !NOTE values here are overridden when issuing
         """
         try:
 
             _user = self.findUser(username)
             if _user:
-                raise EjbcaClientException(f'user {username} already exists')
+                raise EjbcaClientException(f"user {username} already exists")
 
             # Initial throwaways
-            userDataVOWS = self._client.get_type('{http://ws.protocol.core.ejbca.org/}userDataVOWS')
+            userDataVOWS = self._client.get_type(
+                "{http://ws.protocol.core.ejbca.org/}userDataVOWS"
+            )
             user = userDataVOWS()
             user.caName = self.ca
             user.username = username
-            user.password = 'null'
+            user.password = "null"
             user.clearPwd = False
             user.email = email
-            user.subjectDN = 'CN=' + username
+            user.subjectDN = "CN=" + username
             user.tokenType = UserDataVOWS.TOKEN_TYPE_USERGENERATED
             user.keyRecoverable = False
             user.sendNotification = False
@@ -272,53 +268,48 @@ class EjbcaClient:
         except zeep.exceptions.Fault as e:
             raise EjbcaClientException(str(e))
 
-        return
-
     def findUser(self, username: str) -> dict:
         """
         Returns : User record if found
         """
         try:
             _query = {
-                'matchvalue': username,
-                'matchtype': EJBCA_CONSTANTS_USER_MATCH['MATCH_TYPE_EQUALS'],
-                'matchwith': EJBCA_CONSTANTS_USER_MATCH['MATCH_WITH_USERNAME'],
+                "matchvalue": username,
+                "matchtype": EJBCA_CONSTANTS_USER_MATCH["MATCH_TYPE_EQUALS"],
+                "matchwith": EJBCA_CONSTANTS_USER_MATCH["MATCH_WITH_USERNAME"],
             }
             response = self._client.service.findUser(_query)
+            if response:
+                return response[0]
         except zeep.exceptions.Fault as e:
             raise EjbcaClientException(str(e))
 
-        if response:
-            return response[0]
-
     def editUser(self, username: str, email: str):
         """
-        Edit user 
+        Edit user
         """
         try:
             _user = self.findUser(username)
             if not _user:
-                raise EjbcaClientException(f'user {username} not found')
-
-            # Modify end entity record to allow issuance from a p10
-            # note: ejbca required entity record to be STATUS_NEW for new cert
-            _user['email'] = email
+                raise EjbcaClientException(f"user {username} not found")
+            _user["email"] = email
             self._client.service.editUser(_user)
-
         except zeep.exceptions.Fault as e:
             raise EjbcaClientException(str(e))
 
     def deleteUser(self, username: str):
         """
         Delete user and revoke all certificates
+        !TODO parameterize the revocation
         """
         try:
             _user = self.findUser(username)
             if not _user:
-                raise EjbcaClientException(f'user {username} not found')
-
+                raise EjbcaClientException(f"user {username} not found")
             # revoke and delete all certificates ('true')
-            self._client.service.revokeUser(username, EJBCA_CONSTANTS_REVOCATION_REASON['UNSPECIFIED'], 'true')
+            self._client.service.revokeUser(
+                username, EJBCA_CONSTANTS_REVOCATION_REASON["UNSPECIFIED"], "true"
+            )
 
         except zeep.exceptions.Fault as e:
             raise EjbcaClientException(str(e))
@@ -330,51 +321,46 @@ class EjbcaClient:
         try:
             _user = self.findUser(username)
             if not _user:
-                raise EjbcaClientException(f'user {username} not found')
+                raise EjbcaClientException(f"user {username} not found")
 
             # Modify end entity record to allow issuance from a p10
-            # note: ejbca required entity record to be STATUS_NEW for new cert
-            _user['subjectDN'] = dn
-            _user['tokenType'] = UserDataVOWS.TOKEN_TYPE_USERGENERATED
-            _user['status'] = UserDataVOWS.STATUS_NEW
+            # !note: ejbca requires entity record to be STATUS_NEW for new cert
+            _user["subjectDN"] = dn
+            _user["tokenType"] = UserDataVOWS.TOKEN_TYPE_USERGENERATED
+            _user["status"] = UserDataVOWS.STATUS_NEW
             self._client.service.editUser(_user)
 
             response = self._client.service.certificateRequest(
-                _user, 
-                csr, 
-                CertificateHelper.CERT_REQ_TYPE_PKCS10, 
-                None, 
-                CertificateHelper.RESPONSETYPE_CERTIFICATE
+                _user,
+                csr,
+                CertificateHelper.CERT_REQ_TYPE_PKCS10,
+                None,
+                CertificateHelper.RESPONSETYPE_CERTIFICATE,
             )
-
-            # certificate = "-----BEGIN CERTIFICATE-----\n{}\n-----END CERTIFICATE-----\n"
-            # certificate = certificate.format(response["data"].decode())
             certificate = response["data"].decode()
-
             return certificate
-
         except zeep.exceptions.Fault as e:
             raise EjbcaClientException(str(e))
-    
-    def p12enroll(self, username: str, dn: str, password:str) -> bytes:
+
+    def p12enroll(self, username: str, dn: str, password: str) -> bytes:
         """
-        Issue certificate as pkcs#12 from distinguised name
+        Issue certificate as pkcs#12 from distinguished name
         """
         try:
             _user = self.findUser(username)
             if not _user:
-                raise EjbcaClientException(f'user {username} not found')
-
+                raise EjbcaClientException(f"user {username} not found")
             # modify end entity record to allow p12 issuance
-            _user['subjectDN'] = dn
-            _user['password'] = password
-            _user['tokenType'] = UserDataVOWS.TOKEN_TYPE_P12
-            _user['status'] = UserDataVOWS.STATUS_NEW
+            # !note: ejbca requires entity record to be STATUS_NEW for new cert
+            _user["subjectDN"] = dn
+            _user["password"] = password
+            _user["tokenType"] = UserDataVOWS.TOKEN_TYPE_P12
+            _user["status"] = UserDataVOWS.STATUS_NEW
             self._client.service.editUser(_user)
-
-            response = self._client.service.pkcs12Req(username, password, None, '2048', AlgorithmConstants.KEYALGORITHM_RSA)
+            response = self._client.service.pkcs12Req(
+                username, password, None, "2048", AlgorithmConstants.KEYALGORITHM_RSA
+            )
             return base64.b64decode(response["keystoreData"])
-
         except zeep.exceptions.Fault as e:
             raise EjbcaClientException(str(e))
 
@@ -395,7 +381,7 @@ class EjbcaClient:
 
     def getAuthorizedEndEntityProfiles(self) -> list:
         """
-        Returns : List of EE profiles available to this authenitcated client
+        Returns : List of EE profiles available to this authenticated client
         """
         try:
             response = self._client.service.getAuthorizedEndEntityProfiles()
@@ -404,9 +390,9 @@ class EjbcaClient:
 
         return zeep.helpers.serialize_object(response, dict)
 
-    def getCertificates(self, username: str) -> list:
+    def getCertificates(self, username: str, onlyvalid: str) -> list:
         try:
-            r = self._client.service.findCerts(username, 'false')
+            r = self._client.service.findCerts(username, onlyvalid)
             return r
         except zeep.exceptions.Fault as e:
             raise EjbcaClientException(str(e))

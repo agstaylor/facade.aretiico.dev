@@ -7,6 +7,9 @@
 # and files
 !ejbca_client/*.py
 !/*.py
+!/*.json
 !/*.md
 !/*.toml
 !/.gitignore
+!/portal*.pem
+!/server*.pem
