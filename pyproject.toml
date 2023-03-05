@@ -2,7 +2,7 @@
 name = "facade-aretiico-dev"
 version = "0.1.0"
 description = ""
-authors = ["ataylor\t <agstaylor@gmail.com>"]
+authors = ["Alastair Taylor\t <alastair@aretii.co>"]
 readme = "README.md"
 packages = [{include = "facade"}]
 

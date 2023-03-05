@@ -2,9 +2,9 @@
 ## Introduction
 Facade API for Aretiico services
 
-Aretiico backend consists of a number of services (EJBCA, Positronic, etc..), each with their own native low level interfaces, flavours and complexities. This API presents a set of business level endpoints suitable for consumption by front of house UIs such as the Portal.
+Aretiico consists of a number of services (EJBCA, Positronic, etc..), each with their own native low level interfaces, flavours and complexities. This API presents a set of business level endpoints suitable for consumption by front of house UIs such as the Portal.
 
-It is implemented in Python, with the intention of prototyping the end points and lifting these into to AWS Lambda. 
+It is implemented in Python, supporting a prototyping workflow and lifting into to AWS Lambda. 
 
 ## Requirements
 - Python >= 3.10
