@@ -1,3 +1,4 @@
+
 ## Introduction
 Facade API for Aretiico services
 
@@ -17,40 +18,51 @@ It is implemented in Python, with the intention of prototyping the end points an
     
 4.  Run : `python app.py -u eng04.aretiico.dev -c portal@aretiico.dev.pem -s server.pem`.
 
-# get all certificates
-curl --silent http://eng04.aretiico.dev:5000/endentity/certificates/aretiico_user
+## Parse certificates 
 
+> Get for user aretiico_user
 
-# get certificate 0
-curl --silent http://eng04.aretiico.dev:5000/endentity/certificates/aretiico_user | grep -oP '(?<="0": ")[^"]+'
+    curl --silent http://eng04.aretiico.dev:5000/endentity/certificates/aretiico_user
 
-# convert to OpenSSL PEM
-curl --silent http://eng04.aretiico.dev:5000/endentity/certificates/aretiico_user | grep -oP '(?<="0": ")[^"]+' | sed -e '1s/^/-----BEGIN CERTIFICATE-----\n/' -e '$s/$/\n-----END CERTIFICATE-----/' -e 's/\\n/\n/g' > certificate.pem
+> Extract the first returned certificate
 
-# view via OpenSSL
-openssl x509 -in certificate.pem -text
+    curl --silent http://eng04.aretiico.dev:5000/endentity/certificates/aretiico_user | grep -oP '(?<="0": ")[^"]+'
 
----
+> Convert to OpenSSL PEM
 
-# enroll a p12
+    curl --silent http://eng04.aretiico.dev:5000/endentity/certificates/aretiico_user | grep -oP '(?<="0": ")[^"]+' | sed -e '1s/^/-----BEGIN CERTIFICATE-----\n/' -e '$s/$/\n-----END CERTIFICATE-----/' -e 's/\\n/\n/g' > certificate.pem
 
-curl --silent -X POST http://eng04.aretiico.dev:5000/certificate/pkcs12enroll/smime/aretiico_user -H "Content-Type: application/json" -d '{"password":"password", "dn":"E=ataylor@aretiico.dev,CN=Alastair Taylor,OU=Engineering,O=Aretiico,C=GB"}'
+> View
 
-curl --silent -X POST http://eng04.aretiico.dev:5000/certificate/pkcs12enroll/smime/aretiico_user -H "Content-Type: application/json" -d '{"password":"password", "dn":"E=ataylor@aretiico.dev,CN=Alastair Taylor,OU=Engineering,O=Aretiico,C=GB"}' | grep -oP '(?<="keystore": ")[^"]+'
+    openssl x509 -in certificate.pem -text
 
+## Generate a server side key and issue certificate (pkcs#12)
 
-curl --silent -X POST http://eng04.aretiico.dev:5000/certificate/pkcs12enroll/smime/aretiico_user -H "Content-Type: application/json" -d '{"password":"password", "dn":"E=ataylor@aretiico.dev,CN=Alastair Taylor,OU=Engineering,O=Aretiico,C=GB"}' | grep -oP '(?<="keystore": ")[^"]+' | tr -d '\n' | base64 -d > keystore.p12
+> Pass in subject distinguished name (dn) and passphrase to encrypt resulting pkcs#12 
 
-# view via OpenSSL
-openssl pkcs12 -in keystore.p12 -info -nodes
+    curl --silent -X POST http://eng04.aretiico.dev:5000/certificate/pkcs12enroll/smime/aretiico_user -H "Content-Type: application/json" -d '{"password":"password", "dn":"E=ataylor@aretiico.dev,CN=Alastair Taylor,OU=Engineering,O=Aretiico,C=GB"}'
 
-# generate csr
-openssl req -new -newkey rsa:2048 -nodes -out csr.pem -keyout private.key -subj "/C=UK/ST=/L=/O=Aretiico/OU=Engineering/CN=ataylor@aretiico.dev"
+> Extract the returned keystore 
 
+    curl --silent -X POST http://eng04.aretiico.dev:5000/certificate/pkcs12enroll/smime/aretiico_user
+    -H "Content-Type: application/json" -d '{"password":"password", "dn":"E=ataylor@aretiico.dev,CN=Alastair Taylor,OU=Engineering,O=Aretiico,C=GB"}' | grep -oP '(?<="keystore": ")[^"]+'
 
-# view csr
-openssl req -text -noout -verify -in csr.pem
+> Extract the returned keystore and write to file keystore.p12
 
+    curl --silent -X POST http://eng04.aretiico.dev:5000/certificate/pkcs12enroll/smime/aretiico_user
+    -H "Content-Type: application/json" -d '{"password":"password", "dn":"E=ataylor@aretiico.dev,CN=Alastair Taylor,OU=Engineering,O=Aretiico,C=GB"}' | grep -oP '(?<="keystore": ")[^"]+' | tr -d '\n' | base64 -d > keystore.p12
 
+> View keystore file in OpenSSL
 
+    openssl pkcs12 -in keystore.p12 -info -nodes
+
+## Issue certificate from an externally generated CSR (pkcs#10)
+
+> Generate key pair and create PKCS#10 CSR
+
+    openssl req -new -newkey rsa:2048 -nodes -out csr.pem -keyout private.key -subj "/C=UK/ST=/L=/O=Aretiico/OU=Engineering/CN=ataylor@aretiico.dev"
+
+> View CSR
+
+    openssl req -text -noout -verify -in csr.pem
 
