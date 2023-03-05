@@ -6,6 +6,7 @@ Flask application for Aretiico facade REST API
 !todo modularize via blueprints
 
 example usage:
+python app.py --url eng04.aretiico.dev --client portal@aretiico.dev.pem --server server.pem
 python app.py --url ca.aretiico.dev --client portal@aretiico.dev.pem --server server.pem
 """
 from flask import Flask, jsonify, request, make_response
@@ -27,7 +28,7 @@ parser = argparse.ArgumentParser(
 )
 
 parser.add_argument("-c", "--client", type=str, help="client keystore")
-parser.add_argument("-s", "--server", type=str, help="server certificate bundel")
+parser.add_argument("-s", "--server", type=str, help="server certificate bundle")
 parser.add_argument("-u", "--url", type=str, help="ejbca url")
 
 # Check correct arguments were passed
